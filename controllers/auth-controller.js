@@ -83,7 +83,7 @@ export const postLogin = async (req, res) => {
   );
   //   debugger;
   res
-    .cookie("token", token, { httpOnly: false, sameSite: "none" })
+    .cookie("token", token, { httpOnly: false, sameSite: "none", secure: true })
     .send({ logging: true });
   console.log("token", token);
   //   res.send("cookie");
