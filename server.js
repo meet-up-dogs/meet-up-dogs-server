@@ -21,7 +21,7 @@ app.use(
 );
 module.exports = function (app) {
   // add other server routes to path array
-  app.use(proxy(["/api"], { target: "http://localhost:8080" }));
+  app.use(proxy(["/"], { target: "http://localhost:8080" }));
 };
 
 const server = createServer(app);
