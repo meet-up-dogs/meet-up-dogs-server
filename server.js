@@ -30,7 +30,7 @@ const io = new Server(server, {
 // io.use(cors())
 
 app.get("/", (req, res) => {
-  res.send("<h1>Welcome on Meet Up Dogs App-Server</h1>");
+  res.send(`<h1>Welcome on Meet Up Dogs App-Server</h1> ${port}`);
 });
 
 app.use(apiRoutes);
