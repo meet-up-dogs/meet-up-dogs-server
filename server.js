@@ -19,10 +19,6 @@ app.use(
     credentials: true,
   })
 );
-module.exports = function (app) {
-  // add other server routes to path array
-  app.use(proxy(["/"], { target: "http://localhost:8080" }));
-};
 
 const server = createServer(app);
 const io = new Server(server, {
