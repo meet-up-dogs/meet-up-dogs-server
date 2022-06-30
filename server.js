@@ -8,7 +8,7 @@ import cookieParser from "cookie-parser";
 import { Server } from "socket.io";
 import { createServer } from "http";
 
-const port = process.env.PORT || 4000;
+const port = process.env.PORT || 8080;
 const app = express();
 app.use(express.json());
 app.use(cookieParser());
@@ -30,7 +30,7 @@ const io = new Server(server, {
 // io.use(cors())
 
 app.get("/", (req, res) => {
-  res.send("Hi World");
+  res.send("<h1>Welcome on Meet Up Dogs App-Server</h1>");
 });
 
 app.use(apiRoutes);
