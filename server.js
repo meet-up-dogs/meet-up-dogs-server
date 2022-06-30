@@ -7,6 +7,7 @@ import authRoutes from "./routes/auth-routes.js";
 import cookieParser from "cookie-parser";
 import { Server } from "socket.io";
 import { createServer } from "http";
+import proxy from "http-proxy-middleware";
 
 const port = process.env.PORT || 8080;
 const app = express();
@@ -18,6 +19,10 @@ app.use(
     credentials: true,
   })
 );
+module.exports = function (app) {
+  // add other server routes to path array
+  app.use(proxy(["/api"], { target: "http://localhost:8080" }));
+};
 
 const server = createServer(app);
 const io = new Server(server, {
