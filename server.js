@@ -7,7 +7,6 @@ import authRoutes from "./routes/auth-routes.js";
 import cookieParser from "cookie-parser";
 import { Server } from "socket.io";
 import { createServer } from "http";
-import proxy from "http-proxy-middleware";
 
 const port = process.env.PORT || 8080;
 const app = express();
