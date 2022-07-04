@@ -95,7 +95,11 @@ export const postLogout = async (req, res) => {
   // if (!refreshToken) return res.sendStatus(204); // Wenn cookie nicht da ist, kann man hier auch nicht mehr tun
   // console.log(req);
   // Lösche Cookies beim Client
-  res.clearCookie("token");
+  res.clearCookie("token", {
+    httpOnly: false,
+    sameSite: "none",
+    secure: true,
+  });
 
   // Lösche Refresh Token aus Datenbank
   // try {
