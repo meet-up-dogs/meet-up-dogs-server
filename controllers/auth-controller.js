@@ -16,11 +16,7 @@ export const postSignUp = async (req, res) => {
 
 export const userProfil = async (req, res) => {
   try {
-    // let accLog = await UserModel.where("username").equals("Karol");
-    // const cond = { username: req.body.username };
-    // if (accLog) {
-    // const newUser = new UserModel(req.body);
-    // console.log("newUser bei UserProfil.js", newUser);
+
     const updatedUser = await UserModel.findOneAndUpdate(
       { username: req.body.username },
       req.body,
