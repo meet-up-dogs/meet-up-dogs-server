@@ -16,7 +16,6 @@ export const postSignUp = async (req, res) => {
 
 export const userProfil = async (req, res) => {
   try {
-
     const updatedUser = await UserModel.findOneAndUpdate(
       { username: req.body.username },
       req.body,
@@ -79,7 +78,11 @@ export const postLogin = async (req, res) => {
   );
   //   debugger;
   res
-    .cookie("token", token, { httpOnly: false, sameSite: "none", secure: true })
+    .cookie("token", token, {
+      httpOnly: false,
+      sameSite: "none",
+      secure: false,
+    })
     .send({ logging: true });
   console.log("token", token);
   //   res.send("cookie");
