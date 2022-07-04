@@ -15,7 +15,7 @@ app.use(cookieParser());
 app.use(
   cors({
     // origin: "https://meet-up-dogs.netlify.app",
-    origin: "http://localhost:3000",
+    origin: "https://meet-up-dogs.herokuapp.com",
 
     credentials: true,
   })
@@ -25,7 +25,7 @@ const server = createServer(app);
 const io = new Server(server, {
   cors: {
     // origin: "https://meet-up-dogs.netlify.app",
-    origin: "http://localhost:3000",
+    origin: "https://meet-up-dogs.herokuapp.com",
 
     methods: ["GET", "POST"],
   },
