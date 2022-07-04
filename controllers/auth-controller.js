@@ -79,9 +79,10 @@ export const postLogin = async (req, res) => {
   //   debugger;
   res
     .cookie("token", token, {
-      httpOnly: false,
+      httpOnly: true,
       sameSite: "none",
       secure: true,
+      maxAge: 3600000 * 5,
     })
     .send({ logging: true });
   console.log("token", token);
