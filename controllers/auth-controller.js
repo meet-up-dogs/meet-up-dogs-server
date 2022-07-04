@@ -96,23 +96,24 @@ export const postLogout = async (req, res) => {
   // if (!refreshToken) return res.sendStatus(204); // Wenn cookie nicht da ist, kann man hier auch nicht mehr tun
   // console.log(req);
   // Lösche Cookies beim Client
-  // res.clearCookie("token", {
-  //   httpOnly: false,
-  //   sameSite: "none",
-  //   secure: true,
-  // });
-  // // Lösche Refresh Token aus Datenbank
-  // // try {
-  // //   const databaseResponse = await UserModel.updateOne({refreshToken}, {refreshToken:''})
-  // //   // Refresh Token nicht gefunden?
-  // //   if(databaseResponse.matchedCount === 0) return res.sendStatus(204);
-  // // } catch (error) {
-  // //   console.error({error});
-  // //   return res.status(500).json({ msg: "logged out, but couldn't delete refresh Token from DB", error})
-  // // }
-  // // Alles ok: Cookies und erfolgreich aus Datenbank gelöscht
-  // return res.status(200).send({ msg: "successfully logged out" });
-  return res.status(200).send({ msg: "successfully not logged out" });
+  res.clearCookie("token", {
+    httpOnly: false,
+    sameSite: "none",
+    secure: true,
+  });
+
+  // Lösche Refresh Token aus Datenbank
+  // try {
+  //   const databaseResponse = await UserModel.updateOne({refreshToken}, {refreshToken:''})
+  //   // Refresh Token nicht gefunden?
+  //   if(databaseResponse.matchedCount === 0) return res.sendStatus(204);
+  // } catch (error) {
+  //   console.error({error});
+  //   return res.status(500).json({ msg: "logged out, but couldn't delete refresh Token from DB", error})
+  // }
+
+  // Alles ok: Cookies und erfolgreich aus Datenbank gelöscht
+  return res.status(200).send({ msg: "successfully logged out" });
 };
 
 /** @param {express.Response} res */
