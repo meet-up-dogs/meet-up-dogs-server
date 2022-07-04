@@ -1,7 +1,7 @@
 {
   "name": "backend",
   "version": "1.0.0",
-  "description": "",
+  "description": "Server to meet-up-dogs",
   "main": "server.js",
   "type": "module",
   "scripts": {
