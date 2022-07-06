@@ -6,7 +6,7 @@ import UserModel from "../models/user-model.js";
 export const postSignUp = async (req, res) => {
   try {
     const newUser = new UserModel(req.body);
-    console.log(newUser);
+    // console.log(newUser);
     await newUser.save();
     return res.status(201).json({ success: true, insertedData: newUser });
   } catch (error) {

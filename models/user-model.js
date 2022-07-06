@@ -60,7 +60,7 @@ const userSchema = new Schema({
     type: String,
   },
   chats: {
-    type: Array,
+    type: Object,
   },
 });
 
