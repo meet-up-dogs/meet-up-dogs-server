@@ -6,7 +6,7 @@ import UserModel from "../models/user-model.js";
 export const postSignUp = async (req, res) => {
   try {
     const newUser = new UserModel(req.body);
-    console.log(newUser);
+    // console.log(newUser);
     await newUser.save();
     return res.status(201).json({ success: true, insertedData: newUser });
   } catch (error) {
@@ -16,7 +16,6 @@ export const postSignUp = async (req, res) => {
 
 export const userProfil = async (req, res) => {
   try {
-
     const updatedUser = await UserModel.findOneAndUpdate(
       { username: req.body.username },
       req.body,
@@ -79,7 +78,12 @@ export const postLogin = async (req, res) => {
   );
   //   debugger;
   res
-    .cookie("token", token, { httpOnly: false, sameSite: "none", secure: true })
+    .cookie("token", token, {
+      httpOnly: true,
+      sameSite: "none",
+      secure: true,
+      maxAge: 3600000 * 5,
+    })
     .send({ logging: true });
   console.log("token", token);
   //   res.send("cookie");
@@ -92,7 +96,11 @@ export const postLogout = async (req, res) => {
   // if (!refreshToken) return res.sendStatus(204); // Wenn cookie nicht da ist, kann man hier auch nicht mehr tun
   // console.log(req);
   // Lösche Cookies beim Client
-  res.clearCookie("token");
+  res.clearCookie("token", {
+    httpOnly: false,
+    sameSite: "none",
+    secure: true,
+  });
 
   // Lösche Refresh Token aus Datenbank
   // try {
