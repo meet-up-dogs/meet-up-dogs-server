@@ -79,7 +79,7 @@ export const postLogin = async (req, res) => {
   //   debugger;
   res
     .cookie("token", token, {
-      httpOnly: true,
+      httpOnly: false,
       sameSite: "none",
       secure: true,
       maxAge: 3600000 * 5,
@@ -97,7 +97,7 @@ export const postLogout = async (req, res) => {
   // console.log(req);
   // Lösche Cookies beim Client
   res.clearCookie("token", {
-    httpOnly: false,
+    httpOnly: true,
     sameSite: "none",
     secure: true,
   });

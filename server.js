@@ -8,7 +8,6 @@ import cookieParser from "cookie-parser";
 import { Server } from "socket.io";
 import { createServer } from "http";
 import userModel from "./models/user-model.js";
-import e from "express";
 
 const port = process.env.PORT || 8080;
 const app = express();
@@ -57,7 +56,6 @@ io.on("connection", (socket) => {
 
   socket.on("save", async (data) => {
     const { conversation, room, username } = data;
-    console.log("conversation: ", [...conversation]);
     let myUser = await userModel.updateOne(
       { username: username },
       {
@@ -65,7 +63,6 @@ io.on("connection", (socket) => {
       },
       { runValidators: true }
     );
-    console.log(myUser);
     // let myUser = await userModel.findOne({ username: username });
 
     // myUser.chats = {
