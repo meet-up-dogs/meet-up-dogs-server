@@ -8,6 +8,7 @@ import cookieParser from "cookie-parser";
 import { Server } from "socket.io";
 import { createServer } from "http";
 import userModel from "./models/user-model.js";
+import chatModel from "./models/chat-model.js";
 
 const port = process.env.PORT || 8080;
 const app = express();
@@ -50,30 +51,51 @@ io.on("connection", (socket) => {
     socket.join(data);
   });
 
-  socket.on("send_message", (data) => {
+  socket.on("send_message", async (data) => {
+    let myChat = await chatModel.findOne({ roomId: data.room });
+    console.log(myChat);
+
+    if (myChat !== null) {
+      myChat.chat.push({
+        sentBy: data.username,
+        msg: data.message,
+      });
+      // myChat.chat = [];
+
+      myChat.save();
+    } else {
+      console.log("saved");
+      const newChat = await new chatModel({
+        roomId: data.room,
+        chat: [{ sentBy: data.username, msg: data.message }],
+      });
+      newChat.save();
+    }
+
     socket.to(data.room).emit("receive_message", data);
   });
 
-  socket.on("save", async (data) => {
-    const { conversation, room, username } = data;
-    let myUser = await userModel.updateOne(
-      { username: username },
-      {
-        [`chats.${room}`]: [...conversation],
-      },
-      { runValidators: true }
-    );
-    // let myUser = await userModel.findOne({ username: username });
+  //OFFLINE
 
-    // myUser.chats = {
-    //   ...myUser.chats,
-    //   [room]: [...conversation],
-    // };
-    // myUser.chats[room] = [...conversation];
-    // console.log("myUser.chats: ", myUser.chats);
-    // await myUser.save();
-  });
+  // const { conversation, room, username } = data;
+  // let myUser = await userModel.updateOne(
+  //   { username: username },
+  //   {
+  //     [`chats.${room}`]: [...conversation],
+  //   },
+  //   { runValidators: true }
+  // );
+  // let myUser = await userModel.findOne({ username: username });
+
+  // myUser.chats = {
+  //   ...myUser.chats,
+  //   [room]: [...conversation],
+  // };
+  // myUser.chats[room] = [...conversation];
+  // console.log("myUser.chats: ", myUser.chats);
+  // await myUser.save();
 });
+// });
 
 // server.listen(port, () => {
 //   console.log("server listening on port 3001");
