@@ -1,7 +1,6 @@
 import UserModel from "../models/user-model.js";
 
 export const algorithm = async (req, res) => {
-  console.log(req.userName);
   const loggedUser = req.userName;
   try {
     const loggedUserLocation = await UserModel.find({
@@ -44,7 +43,7 @@ export const algorithm = async (req, res) => {
       return;
     });
 
-    console.log(matchedUsers);
+    console.log("matchedUsers.length: ", matchedUsers.length);
     res.send(matchedUsers);
   } catch (err) {
     console.log(err);
