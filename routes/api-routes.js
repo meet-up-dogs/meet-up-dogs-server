@@ -13,10 +13,6 @@ router.post("/json", (req, res) => {
 });
 
 router.get("/getUser", isAuth, (req, res) => {
-  //   res.json({
-  //     success: true,
-  //     secretMessage: `${req.userName}, die Antwort auf die große Frage.... `,
-  //   });
   try {
     res.send({ logging: true, username: req.userName, userId: req.userId });
   } catch (err) {
