@@ -1,6 +1,7 @@
 import express from "express";
 import isAuth from "../middleware/is-auth.js";
 import UserModel from "../models/user-model.js";
+import sendEmail from './nodemailer.js';
 
 const router = express.Router();
 
@@ -31,4 +32,12 @@ router.get("/currentUser", isAuth, async (req, res) => {
   console.log("loggedUser", loggedUser);
   res.send(loggedUser);
 });
+
+router.post('/postemail', async (req, res) => {
+  sendEmail(req.body);
+  
+  res.send('hallo from email')
+  });
+
+
 export default router;
