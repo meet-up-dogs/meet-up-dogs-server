@@ -2,16 +2,15 @@ import nodemailer from 'nodemailer';
 
 const sendEmail = async (data) => {
 
-
   try {
-    
+
     // const mailOptions = {
     //   from: process.env.SMTP_MAIL,
     //   to: emailUser.email,
     //   subject: emailUser.subject,
     //   text: emailUser.message,
     // };
-    
+
     const options = {
       port: 465,  // 465 ist ein verschlüsselter port.
       host: 'mail.riseup.net',  // mailserver
@@ -21,12 +20,12 @@ const sendEmail = async (data) => {
         pass: process.env.SMTP_PASSWORD,
       },
       // tls: {
-        //   // do not fail on invalid certs
-        //   rejectUnauthorized: false,
-        // },
-      }
+      //   // do not fail on invalid certs
+      //   rejectUnauthorized: false,
+      // },
+    }
 
-      let transporter = nodemailer.createTransport(options)
+    let transporter = nodemailer.createTransport(options)
 
 
     let info = await transporter.sendMail({
@@ -34,15 +33,13 @@ const sendEmail = async (data) => {
       to: "kliebereveline@gmail.com", // list of receivers
       subject: "neue nachricht von meet-up-dogs-frontend", // Subject line
       text: `${data.message} from d${data.email}`// plain text body
-      
+
       // html: "<b>Hello world?</b>", // html body
     });
 
     console.log("Message sent: %s", info.messageId);
-    console.log('try works')
     console.log(data)
   }
-
 
   catch (error) {
     console.log(error)
