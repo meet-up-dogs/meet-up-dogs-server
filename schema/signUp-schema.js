@@ -1,4 +1,5 @@
 import { body } from "express-validator";
+import UserModel from "../models/user-model.js";
 
 export const signUpSchema = [
   body("email")
@@ -11,8 +12,10 @@ export const signUpSchema = [
     .isLength({ min: 5 })
     .withMessage("has to have at least 5 characters"),
 
-  body("username")
-    .escape()
-    .contains(" ")
-    .withMessage("Please provide first and last name"),
+  body("username").custom((value) => {
+    return UserModel.findOne({ where: { username: value } }).then(() => {
+      return Promise.reject("Username already taken");
+    });
+  }),
+  // .withMessage("Please provide first and last name"),
 ];

@@ -16,7 +16,7 @@ import valid from "../middleware/valid.js";
 const router = express.Router();
 
 router.post("/signup", signUpSchema, valid, postSignUp);
-router.post("/login", loginSchema, valid, postLogin);
+router.post("/login", loginSchema, postLogin);
 router.post("/userprofil", userProfil);
 router.post("/refreshToken");
 router.post("/logout", postLogout);
