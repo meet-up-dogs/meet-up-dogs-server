@@ -18,7 +18,7 @@ const sendEmail = async (data) => {
 
     let info = await transporter.sendMail({
       from: '<nodemailer@riseup.net>', // sender address
-      to: "kliebereveline@gmail.com", // list of receivers
+      to: "meetupdogs@gmail.com", // list of receivers
       subject: "neue nachricht von meet-up-dogs-frontend", // Subject line
       text: `${data.message} from d${data.email}`// plain text body
     });
