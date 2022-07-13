@@ -3,6 +3,8 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import UserModel from "../models/user-model.js";
 
+
+
 export const postSignUp = async (req, res) => {
   try {
     const newUser = new UserModel(req.body);

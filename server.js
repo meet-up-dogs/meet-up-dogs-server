@@ -9,6 +9,7 @@ import { Server } from "socket.io";
 import { createServer } from "http";
 import userModel from "./models/user-model.js";
 import chatModel from "./models/chat-model.js";
+import nodemailer from "nodemailer"
 
 const port = process.env.PORT || 8080;
 const app = express();
@@ -45,7 +46,7 @@ app.use(apiRoutes);
 app.use(authRoutes);
 
 io.on("connection", (socket) => {
-  console.log(`User Connected: ${socket.id}`);
+  // console.log(`User Connected: ${socket.id}`);
 
   socket.on("join_room", (data) => {
     socket.join(data);
@@ -53,7 +54,7 @@ io.on("connection", (socket) => {
 
   socket.on("send_message", async (data) => {
     let myChat = await chatModel.findOne({ roomId: data.room });
-    console.log(myChat);
+    // console.log(myChat);
 
     if (myChat !== null) {
       myChat.chat.push({
@@ -64,7 +65,7 @@ io.on("connection", (socket) => {
 
       myChat.save();
     } else {
-      console.log("saved");
+      // console.log("saved");
       const newChat = await new chatModel({
         roomId: data.room,
         chat: [{ sentBy: data.username, msg: data.message }],
@@ -100,6 +101,55 @@ io.on("connection", (socket) => {
 // server.listen(port, () => {
 //   console.log("server listening on port 3001");
 // });
+
+app.post("/contact", (req, res ,next) => {
+  console.log("hello")
+  const comment = req.body
+  console.log(comment)
+  res.send(comment)
+
+  const outPut = `
+    <p>Thank You For your Msg</p>
+    <h3>Contact Details</h3>
+    <ul>
+      <li>Name: ${req.body.user}</li>
+      <li>Email: ${req.body.email}</li>
+      <li>Msg: ${req.body.msg}</li>
+    </ul>
+  `;
+  let transporter = nodemailer.createTransport({
+    host: "localhost",
+    secure: false, // true for 465, false for other ports
+    auth: {
+      user: req.body.email, // generated ethereal user
+      // pass: "1234", // generated ethereal password
+    },
+    tls:{
+      rejectUnauthorized: false
+    }
+  });
+
+  let mailOption = {
+    from: req.body.email, // sender address
+    to: 'faridztvki@gmail.com', // list of receivers
+    subject: "Hello ✔", // Subject line
+    text: "Hello world?", // plain text body
+    html: outPut, // html body
+  };
+
+  // send mail with defined transport object
+  transporter.sendMail(mailOption,(error, info)=>{
+    if(error){
+      return console.log(error)
+    }
+    console.log("Message send: %s", info.messageId)
+    console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info))
+    res.send("it works")
+
+  });
+})
+
+
 if (await connectToMongoose()) {
   server.listen(port, (err) => {
     if (err) console.error(err);
