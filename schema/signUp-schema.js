@@ -1,18 +1,18 @@
-import { body } from "express-validator"
+import { body } from "express-validator";
 
 export const signUpSchema = [
-    body("email")
+  body("email")
     .trim()
     .isEmail()
-    .withMessage("has to be valid Email")
-    .normalizeEmail,
+    .normalizeEmail()
+    .withMessage("has to be valid Email"),
 
-    body("password")
-    .isLength({min: 5})
+  body("password")
+    .isLength({ min: 5 })
     .withMessage("has to have at least 5 characters"),
 
-    body("username")
+  body("username")
     .escape()
     .contains(" ")
     .withMessage("Please provide first and last name"),
-]
+];

@@ -12,10 +12,11 @@ import { conversation } from "./conversation.js";
 import { chatHistory } from "./chatHistory.js";
 import { chats } from "./chats.js";
 import isAuth from "../middleware/is-auth.js";
+import valid from "../middleware/valid.js";
 const router = express.Router();
 
-router.post("/signup", postSignUp, signUpSchema);
-router.post("/login", postLogin, loginSchema);
+router.post("/signup", signUpSchema, valid, postSignUp);
+router.post("/login", loginSchema, valid, postLogin);
 router.post("/userprofil", userProfil);
 router.post("/refreshToken");
 router.post("/logout", postLogout);
