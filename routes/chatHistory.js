@@ -7,7 +7,7 @@ export const chatHistory = async (req, res) => {
 
     // console.log(myChat.chat);
 
-    res.send({ chat: myChat.chat });
+    res.send({ chat: myChat?.chat });
   } catch (e) {
     console.log(e);
     res.status(400).json(e);

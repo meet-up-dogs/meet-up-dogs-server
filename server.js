@@ -61,7 +61,9 @@ io.on("connection", (socket) => {
         msg: data.message,
       });
       // myChat.chat = [];
-
+      const now = new Date();
+      console.log(now);
+      myChat.sentAt = now;
       myChat.save();
     } else {
       console.log("saved");

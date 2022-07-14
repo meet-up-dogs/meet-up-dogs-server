@@ -10,6 +10,11 @@ const chatSchema = new Schema({
   chat: {
     type: Array,
   },
+  sentAt: {
+    type: Date,
+    // immutable: true,
+    default: () => new Date(),
+  },
 });
 
 export default mongoose.model("Chat", chatSchema);
