@@ -13,7 +13,7 @@ import chatModel from "./models/chat-model.js";
 const port = process.env.PORT || 8080;
 const app = express();
 app.set("https://meet-up-dogs.netlify.app", 1);
-// console.log("as");
+console.log("as");
 app.use(express.json());
 app.use(cookieParser());
 app.use(
