@@ -59,13 +59,14 @@ const userSchema = new Schema({
   description: {
     type: String,
   },
-  chats: {
-    type: Object,
+  notifications: {
+    type: Array,
   },
 });
 
 userSchema.pre("save", async function (next) {
   console.log("UserSchema ist in pre reingegangen");
+  console.log("passwort im signup ", this.password);
   this.password = await bcrypt.hash(this.password, 15);
   next();
 });

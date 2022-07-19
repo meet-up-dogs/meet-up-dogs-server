@@ -12,14 +12,14 @@ import chatModel from "./models/chat-model.js";
 
 const port = process.env.PORT || 8080;
 const app = express();
-app.set("https://meet-up-dogs.netlify.app", 1);
-console.log("as");
+// app.set("https://meet-up-dogs.netlify.app", 1);
+// console.log("as");
 app.use(express.json());
 app.use(cookieParser());
 app.use(
   cors({
-    origin: "https://meet-up-dogs.netlify.app",
-    // origin: "http://localhost:3000",
+    // origin: "https://meet-up-dogs.netlify.app",
+    origin: "http://localhost:3000",
 
     credentials: true,
   })
@@ -28,8 +28,8 @@ app.use(
 const server = createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: "https://meet-up-dogs.netlify.app",
-    // origin: "http://localhost:3000",
+    // origin: "https://meet-up-dogs.netlify.app",
+    origin: "http://localhost:3000",
 
     methods: ["GET", "POST"],
   },
@@ -53,7 +53,6 @@ io.on("connection", (socket) => {
 
   socket.on("send_message", async (data) => {
     let myChat = await chatModel.findOne({ roomId: data.room });
-    console.log(myChat);
 
     if (myChat !== null) {
       myChat.chat.push({
@@ -73,7 +72,20 @@ io.on("connection", (socket) => {
       });
       newChat.save();
     }
+    const receiverName = data.room.split("-");
+    const indexOfSender = receiverName.indexOf(data.username.toLowerCase());
+    receiverName.splice(indexOfSender, 1);
+    receiverName.join("");
+    console.log("receiverName: ", receiverName);
 
+    const receiver = await userModel.findOneAndUpdate(
+      {
+        username: receiverName,
+      },
+      {
+        $push: { notifications: { sent: data.username } },
+      }
+    );
     socket.to(data.room).emit("receive_message", data);
   });
 
@@ -108,3 +120,6 @@ if (await connectToMongoose()) {
     console.log(`listening to Port ${port}`);
   });
 }
+
+// $2b$15$FjSyo7.S4736AAjorAnZO.0DhXCZJDqDQbsKO5xRRPqsunAb4G/au
+// $2b$15$W9xGlfaNdWxsvYtd.2Ulve3NbdLEPauDx1uM2RGD8nHQUETdcD.yK

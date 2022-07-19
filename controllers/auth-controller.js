@@ -33,6 +33,8 @@ const EXPIRATION_ACCESTOKEN = "360m";
 
 export const postLogin = async (req, res) => {
   const { email, password } = req.body;
+  console.log("password: ", password);
+  console.log("email: ", email);
   if (!email || !password)
     return res
       .status(401)
@@ -43,6 +45,7 @@ export const postLogin = async (req, res) => {
   let loggingUser;
   try {
     loggingUser = await UserModel.findOne({ email });
+
     console.log("logginUser is successful", loggingUser);
     if (!loggingUser)
       return res.status(401).json({ error: msgUserPwdCombination });
@@ -50,14 +53,23 @@ export const postLogin = async (req, res) => {
     console.error(error);
     return res.json({ error: error.message });
   }
+  console.log("email:, ", email);
+  console.log("password: ", password);
+  console.log("loggingUser.password: ", loggingUser);
 
   try {
     const isCorrectPassword = await bcrypt.compare(
       password,
       loggingUser.password
     );
-    if (!isCorrectPassword)
+
+    console.log("------------------------------------");
+
+    // console.log("isCorrectPassword: ", password);
+    if (!isCorrectPassword) {
+      console.log("passwort falsch");
       return res.status(401).json({ error: msgUserPwdCombination });
+    }
   } catch (err) {
     console.error({ error });
     return res.status(500).json({ error });

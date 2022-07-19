@@ -24,5 +24,6 @@ router.get("/getMatchedUsers", isAuth, algorithm);
 router.post("/sendConversation", isAuth, conversation);
 router.post("/getChatHistory", chatHistory);
 router.get("/getChats", isAuth, chats);
+// router.get("/getNotifications", isAuth, chats);
 
 export default router;
