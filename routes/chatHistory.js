@@ -5,12 +5,9 @@ export const chatHistory = async (req, res) => {
   try {
     const myChat = await ChatModel.findOne({ roomId: room });
 
-    // console.log(myChat.chat);
-
     res.send({ chat: myChat?.chat });
   } catch (e) {
     console.log(e);
     res.status(400).json(e);
   }
-  //   console.log(myChat);
 };

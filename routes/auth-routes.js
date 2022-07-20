@@ -11,6 +11,7 @@ import { algorithm } from "./match-algorithm.js";
 import { conversation } from "./conversation.js";
 import { chatHistory } from "./chatHistory.js";
 import { chats } from "./chats.js";
+import { clearNotifications } from "./clearNotifications.js";
 import isAuth from "../middleware/is-auth.js";
 import valid from "../middleware/valid.js";
 const router = express.Router();
@@ -24,6 +25,7 @@ router.get("/getMatchedUsers", isAuth, algorithm);
 router.post("/sendConversation", isAuth, conversation);
 router.post("/getChatHistory", chatHistory);
 router.get("/getChats", isAuth, chats);
+router.post("/clearNotifications", clearNotifications);
 // router.get("/getNotifications", isAuth, chats);
 
 export default router;

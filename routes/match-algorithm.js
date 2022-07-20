@@ -43,7 +43,6 @@ export const algorithm = async (req, res) => {
       return;
     });
 
-    console.log("matchedUsers.length: ", matchedUsers.length);
     res.send(matchedUsers);
   } catch (err) {
     console.log(err);

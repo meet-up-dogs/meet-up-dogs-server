@@ -13,7 +13,6 @@ import chatModel from "./models/chat-model.js";
 const port = process.env.PORT || 8080;
 const app = express();
 // app.set("https://meet-up-dogs.netlify.app", 1);
-// console.log("as");
 app.use(express.json());
 app.use(cookieParser());
 app.use(
@@ -61,11 +60,9 @@ io.on("connection", (socket) => {
       });
       // myChat.chat = [];
       const now = new Date();
-      console.log(now);
       myChat.sentAt = now;
       myChat.save();
     } else {
-      console.log("saved");
       const newChat = await new chatModel({
         roomId: data.room,
         chat: [{ sentBy: data.username, msg: data.message }],
@@ -76,14 +73,13 @@ io.on("connection", (socket) => {
     const indexOfSender = receiverName.indexOf(data.username.toLowerCase());
     receiverName.splice(indexOfSender, 1);
     receiverName.join("");
-    console.log("receiverName: ", receiverName);
 
     const receiver = await userModel.findOneAndUpdate(
       {
         username: receiverName,
       },
       {
-        $push: { notifications: { sent: data.username } },
+        $push: { notifications: data.username },
       }
     );
     socket.to(data.room).emit("receive_message", data);
