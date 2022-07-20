@@ -15,7 +15,6 @@ export default async (req, res, next) => {
       req.cookies.token,
       process.env.TOKEN_SECRET
     );
-    console.log(decodedToken);
     if (decodedToken) {
       req.userId = decodedToken.userId;
       req.userName = decodedToken.userName;

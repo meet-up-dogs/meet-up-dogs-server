@@ -15,7 +15,6 @@ export const signUpSchema = [
 
   body("username").custom(async (value) => {
     const isUser = await UserModel.findOne({ username: value });
-    console.log("usererrrrere,.:", isUser);
     if (isUser) {
       return await Promise.reject("Username already taken");
     }
