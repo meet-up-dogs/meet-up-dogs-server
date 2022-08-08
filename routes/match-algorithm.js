@@ -21,7 +21,7 @@ export const algorithm = async (req, res) => {
       for (
         let i = user.location.bottomLeft[0];
         i <= user.location.topRight[0];
-        i += 0.0001
+        i += 0.001
       ) {
         if (i > bottomLeft[0] && i < topRight[0]) {
           firstMatch = true;
@@ -31,7 +31,7 @@ export const algorithm = async (req, res) => {
         for (
           let i = user.location.bottomLeft[1];
           i <= user.location.topRight[1];
-          i += 0.0001
+          i += 0.001
         ) {
           if (i > bottomLeft[1] && i < topRight[1]) {
             secMatch = true;
