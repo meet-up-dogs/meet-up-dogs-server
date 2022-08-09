@@ -9,7 +9,7 @@ import { Server } from "socket.io";
 import { createServer } from "http";
 import userModel from "./models/user-model.js";
 import chatModel from "./models/chat-model.js";
-
+//DEV
 const port = process.env.PORT || 8080;
 const app = express();
 app.set("https://meet-up-dogs.netlify.app", 1);
