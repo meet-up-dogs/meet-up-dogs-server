@@ -22,7 +22,7 @@ app.use(function (req, res, next) {
   next();
 });
 
-app.set("https://meet-up-dogs.netlify.app", 1);
+// app.set("https://meet-up-dogs.netlify.app", 1);
 app.use(express.json());
 app.use(cookieParser());
 app.use(
