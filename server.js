@@ -12,8 +12,17 @@ import chatModel from "./models/chat-model.js";
 //DEV
 const port = process.env.PORT || 8080;
 const app = express();
+
+app.use(function (req, res, next) {
+  res.header("Access-Control-Allow-Origin", req.headers.origin);
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept"
+  );
+  next();
+});
+
 app.set("https://meet-up-dogs.netlify.app", 1);
-// console.log("as");
 app.use(express.json());
 app.use(cookieParser());
 app.use(
@@ -24,14 +33,6 @@ app.use(
     credentials: true,
   })
 );
-app.use(function (req, res, next) {
-  res.header("Access-Control-Allow-Origin", req.headers.origin);
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept"
-  );
-  next();
-});
 
 const server = createServer(app);
 const io = new Server(server, {
