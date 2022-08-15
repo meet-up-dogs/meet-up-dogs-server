@@ -9,15 +9,25 @@ import { Server } from "socket.io";
 import { createServer } from "http";
 import userModel from "./models/user-model.js";
 import chatModel from "./models/chat-model.js";
-
+//DEV
 const port = process.env.PORT || 8080;
 const app = express();
+
+app.use(function (req, res, next) {
+  res.header("Access-Control-Allow-Origin", req.headers.origin);
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept"
+  );
+  next();
+});
+
 // app.set("https://meet-up-dogs.netlify.app", 1);
 app.use(express.json());
 app.use(cookieParser());
 app.use(
   cors({
-    origin: "https://meet-up-dog.netlify.app",
+    origin: "https://meet-up-dogs.netlify.app",
     // origin: "http://localhost:3000",
 
     credentials: true,
@@ -27,7 +37,8 @@ app.use(
 const server = createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: "https://meet-up-dog.netlify.app",
+
+    origin: "https://meet-up-dogs.netlify.app",
     // origin: "http://localhost:3000",
 
     methods: ["GET", "POST"],
